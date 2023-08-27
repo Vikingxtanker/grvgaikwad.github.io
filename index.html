@@ -8,13 +8,20 @@
 </head>
 <body>
     <div class="container">
-        <h1>Symptom Checker</h1>
-        <form id="symptomForm">
-            <label for="symptoms">Enter your symptoms:</label>
-            <textarea id="symptoms" name="symptoms" rows="4" cols="50"></textarea>
-            <button type="button" id="checkButton">Check Symptoms</button>
-        </form>
-        <div id="diagnosisResult"></div>
+        <header>
+            <h1>Symptom Checker</h1>
+        </header>
+        <main>
+            <section class="symptom-form">
+                <h2>Enter Your Symptoms</h2>
+                <textarea id="symptoms" name="symptoms" rows="4" placeholder="Separate symptoms with commas"></textarea>
+                <button id="checkButton">Check Symptoms</button>
+            </section>
+            <section class="diagnosis">
+                <h2>Diagnosis Result</h2>
+                <div id="diagnosisResult"></div>
+            </section>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
