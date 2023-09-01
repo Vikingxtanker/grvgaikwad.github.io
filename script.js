@@ -1,6 +1,5 @@
 document.getElementById('checkButton').addEventListener('click', function () {
-    const inputSymptoms = document.getElementById('symptoms').value.toLowerCase().split(',');
-    const symptoms = inputSymptoms.map(symptom => symptom.trim());
+    const selectedSymptom = document.getElementById('symptomDropdown').value.toLowerCase();
     let matchingDiseases = [];
 
     // Basic disease and symptom data (for demonstration only)
@@ -11,19 +10,18 @@ document.getElementById('checkButton').addEventListener('click', function () {
         // Add more diseases and symptoms here
     ];
 
-    // Iterate through diseases and check for matching symptoms
+    // Iterate through diseases and check for matching symptom
     for (const disease of diseases) {
-        const matchingSymptoms = disease.symptoms.filter(symptom => symptoms.includes(symptom));
-        if (matchingSymptoms.length > 0) {
+        if (disease.symptoms.includes(selectedSymptom)) {
             matchingDiseases.push(disease.name);
         }
     }
 
     let diagnosisResult = "";
     if (matchingDiseases.length > 0) {
-        diagnosisResult = `Diseases related to the symptoms you entered: ${matchingDiseases.join(', ')}.`;
+        diagnosisResult = `Diseases related to the symptom you selected: ${matchingDiseases.join(', ')}.`;
     } else {
-        diagnosisResult = "No specific diseases found related to the symptoms you entered.";
+        diagnosisResult = "No specific diseases found related to the symptom you selected.";
     }
 
     document.getElementById('diagnosisResult').textContent = diagnosisResult;
