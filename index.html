@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nigga Diagnoser 101</title>
+    <title>Symptom Checker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Nigga Diagnoser 101</h1>
+            <h1>Symptom Checker</h1>
         </header>
         <main>
             <section class="symptom-form">
                 <h2>Enter Your Symptoms</h2>
-                <textarea id="symptoms" name="symptoms" rows="4" placeholder="Separate symptoms with commas"></textarea>
+                <select id="symptomDropdown">
+                    <option value="">Select a symptom...</option>
+                    <option value="runny nose">Runny Nose</option>
+                    <option value="sneezing">Sneezing</option>
+                    <option value="cough">Cough</option>
+                    <!-- Add more symptom options here -->
+                </select>
                 <button id="checkButton">Check Symptoms</button>
             </section>
             <section class="diagnosis">
