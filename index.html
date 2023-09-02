@@ -14,11 +14,12 @@
         <main>
             <section class="symptom-form">
                 <h2>Select Your Symptoms</h2>
+                <div class="symptom-input">
+                    <input type="text" id="symptomInput" placeholder="Type a symptom...">
+                    <div id="symptomSuggestions"></div>
+                </div>
                 <select id="symptomDropdown" multiple>
-                    <option value="runny nose">Runny Nose</option>
-                    <option value="sneezing">Sneezing</option>
-                    <option value="cough">Cough</option>
-                    <!-- Add more symptom options here -->
+                    <!-- Options here... -->
                 </select>
                 <button id="checkButton">Check Symptoms</button>
             </section>
