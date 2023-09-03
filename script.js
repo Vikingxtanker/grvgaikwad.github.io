@@ -1,34 +1,27 @@
-$(document).ready(function() {
-    $('#checkButton').click(function() {
-        const selectedSymptoms = Array.from($('#symptomDropdown').find('option:selected')).map(option => option.value);
+document.getElementById('checkButton').addEventListener('click', function () {
+    const selectedSymptoms = Array.from(document.getElementById('symptomDropdown').selectedOptions).map(option => option.value);
 
-        if (selectedSymptoms.length === 0) {
-            $('#diagnosisResult').text("Please select at least one symptom.");
-            return;
-        }
+    if (selectedSymptoms.length === 0) {
+        document.getElementById('diagnosisResult').textContent = "Please select at least one symptom.";
+        return;
+    }
 
-        // Create a query string from selected symptoms
-        const symptomQuery = selectedSymptoms.join(',');
+    const symptomQuery = selectedSymptoms.join(',');
 
-        // Make a request to the Symptoma API
-        $.ajax({
-            url: `https://www.symptoma.com/api/v2/conditions?lang=en&includeSimplifiedResults=false&symptoms=${symptomQuery}`,
-            type: 'GET',
-            success: function(response) {
-                const conditions = response.conditions;
+    // Replace this with your API integration code
+    fetch(`YOUR_API_ENDPOINT?symptoms=${symptomQuery}&api_key=YOUR_API_KEY`)
+        .then(response => response.json())
+        .then(data => {
+            // Process the API response and update the diagnosis result and probability
+            // Example: const diagnosisResult = data.result;
+            // Example: const probability = data.probability;
 
-                if (conditions.length === 0) {
-                    $('#diagnosisResult').text("No specific diseases found related to the selected symptoms.");
-                } else {
-                    const topCondition = conditions[0];
-                    const diagnosisResult = `Likely disease: ${topCondition.name}.`;
-                    $('#diagnosisResult').text(diagnosisResult);
-                }
-            },
-            error: function(error) {
-                console.error(error);
-                $('#diagnosisResult').text("An error occurred while fetching diagnosis data.");
-            }
+            // Update the HTML elements with the diagnosis and probability
+            // document.getElementById('diagnosisResult').textContent = diagnosisResult;
+            // document.getElementById('diagnosisProbability').textContent = `Probability: ${probability}%`;
+        })
+        .catch(error => {
+            console.error(error);
+            document.getElementById('diagnosisResult').textContent = "An error occurred while fetching diagnosis data.";
         });
-    });
 });
