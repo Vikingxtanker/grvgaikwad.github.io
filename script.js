@@ -49,15 +49,43 @@ function addSymptom(symptom) {
     }
 }
 
-document.getElementById('checkButton').addEventListener('click', function () {
-    const matchingDiseases = findMatchingDiseases(selectedSymptoms);
+const diseases = [
+    {
+        name: "Common Cold",
+        symptoms: ["runny nose", "sneezing", "cough", "sore throat"]
+    },
+    {
+        name: "Flu",
+        symptoms: ["fever", "body aches", "fatigue", "cough"]
+    },
+    // Add more diseases and symptoms here
+];
 
-    let diagnosisResult = "";
-    if (matchingDiseases.length > 0) {
-        diagnosisResult = `Diseases related to the selected symptoms: ${matchingDiseases.join(', ')}.`;
-    } else {
-        diagnosisResult = "No specific diseases found related to the selected symptoms.";
+function findMatchingDiseases(selectedSymptoms) {
+    const matchingDiseases = [];
+    
+    for (const disease of diseases) {
+        const matchingSymptoms = disease.symptoms.filter(symptom =>
+            selectedSymptoms.includes(symptom)
+        );
+        
+        if (matchingSymptoms.length > 0) {
+            matchingDiseases.push(disease.name);
+        }
     }
+    
+    return matchingDiseases;
+}
+
+const selectedSymptoms = ["sneezing", "cough", "fever"]; // Example user-selected symptoms
+const matchingDiseases = findMatchingDiseases(selectedSymptoms);
+
+if (matchingDiseases.length > 0) {
+    console.log(`Diseases related to the selected symptoms: ${matchingDiseases.join(', ')}.`);
+} else {
+    console.log("No specific diseases found related to the selected symptoms.");
+}
+
 
     document.getElementById('diagnosisResult').textContent = diagnosisResult;
 });
