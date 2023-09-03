@@ -32,7 +32,8 @@ document.getElementById('symptomInput').addEventListener('input', function () {
 
 function addSymptom(symptom) {
     const symptomInput = document.getElementById('symptomInput');
-
+    const selectedSymptomsContainer = document.getElementById('selectedSymptoms');
+    
     // Close the suggestions when a symptom is added
     const symptomSuggestions = document.getElementById('symptomSuggestions');
     symptomSuggestions.innerHTML = "";
@@ -40,10 +41,9 @@ function addSymptom(symptom) {
     // Prevent adding duplicate symptoms and empty values
     if (symptom.trim() !== "" && !selectedSymptoms.includes(symptom)) {
         selectedSymptoms.push(symptom);
-        const selectedSymptomsContainer = document.getElementById('selectedSymptoms');
         const symptomTag = document.createElement('span');
         symptomTag.classList.add('symptom-tag');
-        symptomTag.textContent = symptom;
+        symptomTag.textContent = `${symptom}, `; // Add a comma after the symptom
         selectedSymptomsContainer.appendChild(symptomTag);
         symptomInput.value = ""; // Clear the input
     }
