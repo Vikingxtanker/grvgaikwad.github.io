@@ -89,3 +89,45 @@ document.getElementById('checkButton').addEventListener('click', function () {
 
     document.getElementById('diagnosisResult').textContent = diagnosisResult;
 });
+
+// ... (previous JavaScript code) ...
+
+// Function to initialize autocomplete
+function initializeAutocomplete() {
+    const symptomInput = document.getElementById('symptomInput');
+    const symptomSuggestions = document.getElementById('symptomSuggestions');
+    
+    symptomInput.addEventListener('input', function () {
+        const inputSymptoms = this.value.toLowerCase().split(','); // Split input by commas
+        const lastInputSymptom = inputSymptoms[inputSymptoms.length - 1].trim(); // Get the last input symptom
+        symptomSuggestions.innerHTML = "";
+
+        // Basic symptom data (for demonstration only)
+        const symptoms = [
+            "runny nose", "sneezing", "cough", "fever", "body aches",
+            "fatigue", "itchy eyes", "nasal congestion"
+            // Add more symptoms here
+        ];
+
+        // Find matching symptoms and display suggestions
+        const matchingSymptoms = symptoms.filter(symptom =>
+            symptom.toLowerCase().includes(lastInputSymptom)
+        );
+
+        matchingSymptoms.forEach(matchingSymptom => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.classList.add('suggestion-item');
+            suggestionItem.textContent = matchingSymptom;
+            suggestionItem.addEventListener('click', function () {
+                addSymptom(matchingSymptom);
+            });
+            symptomSuggestions.appendChild(suggestionItem);
+        });
+    });
+}
+
+// Call the initializeAutocomplete function to enable autocomplete
+initializeAutocomplete();
+
+// ... (previous JavaScript code) ...
+
