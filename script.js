@@ -1,41 +1,3 @@
-document.getElementById('symptomInput').addEventListener('input', function () {
-    const inputSymptom = this.value.toLowerCase();
-    const symptomSuggestions = document.getElementById('symptomSuggestions');
-    symptomSuggestions.innerHTML = "";
-
-    // Basic symptom data (for demonstration only)
-    const symptoms = [
-        "runny nose", "sneezing", "cough", "fever", "body aches",
-        "fatigue", "itchy eyes", "nasal congestion"
-        // Add more symptoms here
-    ];
-
-    // Find matching symptoms and display suggestions
-    const matchingSymptoms = symptoms.filter(symptom =>
-        symptom.toLowerCase().includes(inputSymptom)
-    );
-
-    matchingSymptoms.forEach(matchingSymptom => {
-        const suggestionItem = document.createElement('div');
-        suggestionItem.classList.add('suggestion-item');
-        suggestionItem.textContent = matchingSymptom;
-        suggestionItem.addEventListener('click', function () {
-            addSymptom(matchingSymptom);
-        });
-        symptomSuggestions.appendChild(suggestionItem);
-    });
-});
-
-function addSymptom(symptom) {
-    const symptomDropdown = document.getElementById('symptomDropdown');
-    const newOption = document.createElement('option');
-    newOption.value = symptom;
-    newOption.text = symptom;
-    symptomDropdown.appendChild(newOption);
-    document.getElementById('symptomInput').value = ""; // Clear the input
-    document.getElementById('symptomSuggestions').innerHTML = ""; // Clear suggestions
-}
-
 document.getElementById('checkButton').addEventListener('click', function () {
     const selectedSymptoms = Array.from(document.getElementById('symptomDropdown').selectedOptions).map(option => option.value.toLowerCase());
     let matchingDiseases = [];
@@ -47,6 +9,9 @@ document.getElementById('checkButton').addEventListener('click', function () {
         { name: "Allergies", symptoms: ["itchy eyes", "sneezing", "nasal congestion"] }
         // Add more diseases and symptoms here
     ];
+
+    // Calculate a random probability (for demonstration only)
+    const randomProbability = Math.floor(Math.random() * 100) + 1;
 
     // Iterate through diseases and check for matching symptoms
     for (const disease of diseases) {
@@ -62,5 +27,7 @@ document.getElementById('checkButton').addEventListener('click', function () {
         diagnosisResult = "No specific diseases found related to the selected symptoms.";
     }
 
+    // Display the diagnosis result and probability
     document.getElementById('diagnosisResult').textContent = diagnosisResult;
+    document.getElementById('diagnosisProbability').textContent = `Probability: ${randomProbability}%`;
 });
