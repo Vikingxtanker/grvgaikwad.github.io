@@ -14,6 +14,10 @@
         <main>
             <section class="symptom-form">
                 <h2>Select Your Symptoms</h2>
+                <div class="autocomplete">
+                    <input type="text" id="symptomInput" placeholder="Type a symptom...">
+                    <div id="symptomSuggestions" class="autocomplete-items"></div>
+                </div>
                 <select id="symptomDropdown" multiple>
                     <!-- Options here... -->
                 </select>
@@ -22,7 +26,6 @@
             <section class="diagnosis">
                 <h2>Diagnosis Result</h2>
                 <div id="diagnosisResult"></div>
-                <div id="diagnosisProbability"></div>
             </section>
         </main>
     </div>
