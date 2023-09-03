@@ -2,7 +2,8 @@
 const selectedSymptoms = [];
 
 document.getElementById('symptomInput').addEventListener('input', function () {
-    const inputSymptom = this.value.toLowerCase();
+    const inputSymptoms = this.value.toLowerCase().split(','); // Split input by commas
+    const lastInputSymptom = inputSymptoms[inputSymptoms.length - 1].trim(); // Get the last input symptom
     const symptomSuggestions = document.getElementById('symptomSuggestions');
     symptomSuggestions.innerHTML = "";
 
@@ -15,7 +16,7 @@ document.getElementById('symptomInput').addEventListener('input', function () {
 
     // Find matching symptoms and display suggestions
     const matchingSymptoms = symptoms.filter(symptom =>
-        symptom.toLowerCase().includes(inputSymptom)
+        symptom.toLowerCase().includes(lastInputSymptom)
     );
 
     matchingSymptoms.forEach(matchingSymptom => {
@@ -30,31 +31,7 @@ document.getElementById('symptomInput').addEventListener('input', function () {
 });
 
 function addSymptom(symptom) {
-    // Prevent adding duplicate symptoms
-    if (!selectedSymptoms.includes(symptom)) {
-        selectedSymptoms.push(symptom);
-        const selectedSymptomsContainer = document.getElementById('selectedSymptoms');
-        const symptomTag = document.createElement('span');
-        symptomTag.classList.add('symptom-tag');
-        symptomTag.textContent = symptom;
-        selectedSymptomsContainer.appendChild(symptomTag);
-        document.getElementById('symptomInput').value = ""; // Clear the input
-        document.getElementById('symptomSuggestions').innerHTML = ""; // Clear suggestions
-    }
-}
-
-document.getElementById('checkButton').addEventListener('click', function () {
-    const matchingDiseases = findMatchingDiseases(selectedSymptoms);
-
-    let diagnosisResult = "";
-    if (matchingDiseases.length > 0) {
-        diagnosisResult = `Diseases related to the selected symptoms: ${matchingDiseases.join(', ')}.`;
-    } else {
-        diagnosisResult = "No specific diseases found related to the selected symptoms.";
-    }
-
-    document.getElementById('diagnosisResult').textContent = diagnosisResult;
-});
+    const symptomInput =
 
 
 // Close the suggestions when clicking outside the input and suggestions
