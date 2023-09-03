@@ -60,3 +60,11 @@ document.getElementById('checkButton').addEventListener('click', function () {
 
     document.getElementById('diagnosisResult').textContent = diagnosisResult;
 });
+
+// Close the suggestions when clicking outside the input and suggestions
+document.addEventListener('click', function (e) {
+    const symptomSuggestions = document.getElementById('symptomSuggestions');
+    if (!e.target.closest('.autocomplete')) {
+        symptomSuggestions.innerHTML = "";
+    }
+});
