@@ -31,13 +31,35 @@ document.getElementById('symptomInput').addEventListener('input', function () {
 });
 
 function addSymptom(symptom) {
-    const symptomInput =
+    const symptomInput = document.getElementById('symptomInput');
 
-
-// Close the suggestions when clicking outside the input and suggestions
-document.addEventListener('click', function (e) {
+    // Close the suggestions when a symptom is added
     const symptomSuggestions = document.getElementById('symptomSuggestions');
-    if (!e.target.closest('.autocomplete')) {
-        symptomSuggestions.innerHTML = "";
+    symptomSuggestions.innerHTML = "";
+
+    // Prevent adding duplicate symptoms and empty values
+    if (symptom.trim() !== "" && !selectedSymptoms.includes(symptom)) {
+        selectedSymptoms.push(symptom);
+        const selectedSymptomsContainer = document.getElementById('selectedSymptoms');
+        const symptomTag = document.createElement('span');
+        symptomTag.classList.add('symptom-tag');
+        symptomTag.textContent = symptom;
+        selectedSymptomsContainer.appendChild(symptomTag);
+        symptomInput.value = ""; // Clear the input
     }
+}
+
+document.getElementById('checkButton').addEventListener('click', function () {
+    const matchingDiseases = findMatchingDiseases(selectedSymptoms);
+
+    let diagnosisResult = "";
+    if (matchingDiseases.length > 0) {
+        diagnosisResult = `Diseases related to the selected symptoms: ${matchingDiseases.join(', ')}.`;
+    } else {
+        diagnosisResult = "No specific diseases found related to the selected symptoms.";
+    }
+
+    document.getElementById('diagnosisResult').textContent = diagnosisResult;
 });
+
+// ... (previous JavaScript code) ...
