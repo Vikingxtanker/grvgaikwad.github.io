@@ -1,3 +1,6 @@
+// Keep track of selected symptoms
+const selectedSymptoms = [];
+
 document.getElementById('symptomInput').addEventListener('input', function () {
     const inputSymptom = this.value.toLowerCase();
     const symptomSuggestions = document.getElementById('symptomSuggestions');
@@ -27,29 +30,21 @@ document.getElementById('symptomInput').addEventListener('input', function () {
 });
 
 function addSymptom(symptom) {
-    const symptomInput = document.getElementById('symptomInput');
-    symptomInput.value = symptom; // Set the input value
-    document.getElementById('symptomSuggestions').innerHTML = ""; // Clear suggestions
+    // Prevent adding duplicate symptoms
+    if (!selectedSymptoms.includes(symptom)) {
+        selectedSymptoms.push(symptom);
+        const selectedSymptomsContainer = document.getElementById('selectedSymptoms');
+        const symptomTag = document.createElement('span');
+        symptomTag.classList.add('symptom-tag');
+        symptomTag.textContent = symptom;
+        selectedSymptomsContainer.appendChild(symptomTag);
+        document.getElementById('symptomInput').value = ""; // Clear the input
+        document.getElementById('symptomSuggestions').innerHTML = ""; // Clear suggestions
+    }
 }
 
 document.getElementById('checkButton').addEventListener('click', function () {
-    const selectedSymptoms = [document.getElementById('symptomInput').value.toLowerCase()];
-    let matchingDiseases = [];
-
-    // Basic disease and symptom data (for demonstration only)
-    const diseases = [
-        { name: "Common Cold", symptoms: ["runny nose", "sneezing", "cough"] },
-        { name: "Flu", symptoms: ["fever", "body aches", "fatigue"] },
-        { name: "Allergies", symptoms: ["itchy eyes", "sneezing", "nasal congestion"] }
-        // Add more diseases and symptoms here
-    ];
-
-    // Iterate through diseases and check for matching symptoms
-    for (const disease of diseases) {
-        if (selectedSymptoms.every(symptom => disease.symptoms.includes(symptom))) {
-            matchingDiseases.push(disease.name);
-        }
-    }
+    const matchingDiseases = findMatchingDiseases(selectedSymptoms);
 
     let diagnosisResult = "";
     if (matchingDiseases.length > 0) {
@@ -60,6 +55,7 @@ document.getElementById('checkButton').addEventListener('click', function () {
 
     document.getElementById('diagnosisResult').textContent = diagnosisResult;
 });
+
 
 // Close the suggestions when clicking outside the input and suggestions
 document.addEventListener('click', function (e) {
