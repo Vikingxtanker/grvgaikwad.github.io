@@ -1,33 +1,34 @@
-document.getElementById('checkButton').addEventListener('click', function () {
-    const selectedSymptoms = Array.from(document.getElementById('symptomDropdown').selectedOptions).map(option => option.value.toLowerCase());
-    let matchingDiseases = [];
+$(document).ready(function() {
+    $('#checkButton').click(function() {
+        const selectedSymptoms = Array.from($('#symptomDropdown').find('option:selected')).map(option => option.value);
 
-    // Basic disease and symptom data (for demonstration only)
-    const diseases = [
-        { name: "Common Cold", symptoms: ["runny nose", "sneezing", "cough"] },
-        { name: "Flu", symptoms: ["fever", "body aches", "fatigue"] },
-        { name: "Allergies", symptoms: ["itchy eyes", "sneezing", "nasal congestion"] }
-        // Add more diseases and symptoms here
-    ];
-
-    // Calculate a random probability (for demonstration only)
-    const randomProbability = Math.floor(Math.random() * 100) + 1;
-
-    // Iterate through diseases and check for matching symptoms
-    for (const disease of diseases) {
-        if (selectedSymptoms.every(symptom => disease.symptoms.includes(symptom))) {
-            matchingDiseases.push(disease.name);
+        if (selectedSymptoms.length === 0) {
+            $('#diagnosisResult').text("Please select at least one symptom.");
+            return;
         }
-    }
 
-    let diagnosisResult = "";
-    if (matchingDiseases.length > 0) {
-        diagnosisResult = `Diseases related to the selected symptoms: ${matchingDiseases.join(', ')}.`;
-    } else {
-        diagnosisResult = "No specific diseases found related to the selected symptoms.";
-    }
+        // Create a query string from selected symptoms
+        const symptomQuery = selectedSymptoms.join(',');
 
-    // Display the diagnosis result and probability
-    document.getElementById('diagnosisResult').textContent = diagnosisResult;
-    document.getElementById('diagnosisProbability').textContent = `Probability: ${randomProbability}%`;
+        // Make a request to the Symptoma API
+        $.ajax({
+            url: `https://www.symptoma.com/api/v2/conditions?lang=en&includeSimplifiedResults=false&symptoms=${symptomQuery}`,
+            type: 'GET',
+            success: function(response) {
+                const conditions = response.conditions;
+
+                if (conditions.length === 0) {
+                    $('#diagnosisResult').text("No specific diseases found related to the selected symptoms.");
+                } else {
+                    const topCondition = conditions[0];
+                    const diagnosisResult = `Likely disease: ${topCondition.name}.`;
+                    $('#diagnosisResult').text(diagnosisResult);
+                }
+            },
+            error: function(error) {
+                console.error(error);
+                $('#diagnosisResult').text("An error occurred while fetching diagnosis data.");
+            }
+        });
+    });
 });
