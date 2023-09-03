@@ -27,11 +27,36 @@ document.getElementById('symptomInput').addEventListener('input', function () {
 });
 
 function addSymptom(symptom) {
-    const symptomDropdown = document.getElementById('symptomDropdown');
-    const newOption = document.createElement('option');
-    newOption.value = symptom;
-    newOption.text = symptom;
-    symptomDropdown.appendChild(newOption);
-    document.getElementById('symptomInput').value = ""; // Clear the input
+    const symptomInput = document.getElementById('symptomInput');
+    symptomInput.value = symptom; // Set the input value
     document.getElementById('symptomSuggestions').innerHTML = ""; // Clear suggestions
 }
+
+document.getElementById('checkButton').addEventListener('click', function () {
+    const selectedSymptoms = [document.getElementById('symptomInput').value.toLowerCase()];
+    let matchingDiseases = [];
+
+    // Basic disease and symptom data (for demonstration only)
+    const diseases = [
+        { name: "Common Cold", symptoms: ["runny nose", "sneezing", "cough"] },
+        { name: "Flu", symptoms: ["fever", "body aches", "fatigue"] },
+        { name: "Allergies", symptoms: ["itchy eyes", "sneezing", "nasal congestion"] }
+        // Add more diseases and symptoms here
+    ];
+
+    // Iterate through diseases and check for matching symptoms
+    for (const disease of diseases) {
+        if (selectedSymptoms.every(symptom => disease.symptoms.includes(symptom))) {
+            matchingDiseases.push(disease.name);
+        }
+    }
+
+    let diagnosisResult = "";
+    if (matchingDiseases.length > 0) {
+        diagnosisResult = `Diseases related to the selected symptoms: ${matchingDiseases.join(', ')}.`;
+    } else {
+        diagnosisResult = "No specific diseases found related to the selected symptoms.";
+    }
+
+    document.getElementById('diagnosisResult').textContent = diagnosisResult;
+});
